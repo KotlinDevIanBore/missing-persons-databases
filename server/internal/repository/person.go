@@ -13,28 +13,21 @@ func (r *PersonRepository) CreatePerson(person models.Person) error {
 
 	const query = `
 	INSERT INTO missing_persons.missing_persons (
-	first_name,
-	middle_name,
-	surname,
-	age,
-	gender,
-	lastseen_location,
-	lastseen_date,
-	contact_person,
-	contact_phone,
-	contact_email
-	
-	
+		id,
+		first_name,
+		middle_name,
+		surname,
+		age,
+		gender,
+		lastseen_location,
+		lastseen_date,
+		contact_person,
+		contact_phone,
+		contact_email
+	) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`
 
-	
-	) VALUES (?,?,?,?,?,?,?,?,?,?)
-
-
-	
-	
-	`
-
-	_, err := r.DB.Exec(query, person.FirstName, person.MiddleName, person.Surname, person.Age, person.Gender, person.LastSeenLocation, person.LastSeenDate, person.ContactPerson, person.ContactPhone, person.ContactEmail)
+	_, err := r.DB.Exec(query, person.ID,person.FirstName, person.MiddleName, person.Surname, person.Age, person.Gender, person.LastSeenLocation, person.LastSeenDate, person.ContactPerson, person.ContactPhone, person.ContactEmail)
 
 	return err
 

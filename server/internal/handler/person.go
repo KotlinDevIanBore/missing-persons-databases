@@ -39,3 +39,35 @@ c.JSON(http.StatusOK,persons)
 }
 
 
+func (h*PersonHandler) CreateMissingPersons(c*gin.Context) {
+
+	var newPerson models.Person
+
+	err := c.ShouldBindJSON(&newPerson)
+
+
+	if err != nil {
+
+		c.JSON(http.StatusBadRequest ,gin.H{
+			"error": "Invalid request data",
+			"details": err.Error(),
+		})
+	}
+
+
+	err= h.Service.CreatePerson(newPerson)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError,gin.H{
+
+			"error":"Failed to create ne person",
+			"details":err.Error(),
+
+		})
+	}
+
+
+
+
+
+}
