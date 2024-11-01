@@ -12,7 +12,7 @@ type PersonRepository struct {
 func (r *PersonRepository) CreatePerson(person models.Person) error {
 
 	const query = `
-	INSERT INTO missing_persons.missing_persons (
+	INSERT INTO defaultdb.missing_persons (
 		id,
 		first_name,
 		middle_name,
@@ -50,7 +50,7 @@ func (r *PersonRepository) GetPerson() ([]models.Person, error) {
     mst.contact_phone AS contact_phone,
     mst.contact_email AS contact_email
 FROM 
-    missing_persons.missing_persons mst;
+    defaultdb.missing_persons mst;
 
 	
 	`
