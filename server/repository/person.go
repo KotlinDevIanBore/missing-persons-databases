@@ -9,20 +9,7 @@ type PersonRepository struct {
 	db *sql.DB
 }
 
-func (r *PersonRepository) CreatePerson(ID string,
-	FirstName string,
-	MiddleName string,
-	Surname string,
-	name string,
-	Age int,
-	Gender string,
-	LastSeenLocation string,
-	LastSeenDate string,
-	ContactPerson string,
-	ContactPhone string,
-	ContactEmail string) error {
-
-	values := []interface{}{FirstName, MiddleName, Surname, Age, Gender, LastSeenLocation, LastSeenDate, ContactPerson, ContactPhone, ContactEmail}
+func (r *PersonRepository) CreatePerson(person models.Person) error {
 
 	const query = `
 	INSERT INTO missing_persons.missing_persons (
@@ -40,20 +27,20 @@ func (r *PersonRepository) CreatePerson(ID string,
 	
 
 	
-	) VALUES (?,?,?,?,?,?,?,?,?.?)
+	) VALUES (?,?,?,?,?,?,?,?,?,?)
 
 
 	
 	
 	`
 
-	_, err := r.db.Exec(query, values)
+	_, err := r.db.Exec(query, person.FirstName, person.MiddleName, person.Surname, person.Age, person.Gender, person.LastSeenLocation, person.LastSeenDate, person.ContactPerson, person.ContactPhone, person.ContactEmail)
 
 	return err
 
 }
 
-func (r *PersonRepository) GetPerson() ([]models.Person,error) {
+func (r *PersonRepository) GetPerson() ([]models.Person, error) {
 
 	const query = ` 
 
@@ -76,21 +63,18 @@ FROM
 	`
 
 	rows, err := r.db.Query(query)
-    if err != nil {
-        return nil, err
-    }
+	if err != nil {
+		return nil, err
+	}
 
 	defer rows.Close()
 
-    
-
 	var persons []models.Person
-
 
 	for rows.Next() {
 
 		var person models.Person
-	err:=rows.Scan(
+		err := rows.Scan(
 
 			&person.ID,
 			&person.FirstName,
@@ -103,24 +87,20 @@ FROM
 			&person.ContactPerson,
 			&person.ContactPhone,
 			&person.ContactEmail,
-		);
+		)
 
-		if err !=nil {
-			return nil ,err
+		if err != nil {
+			return nil, err
 		}
-
-
 
 		persons = append(persons, person)
 
 	}
 
-	if err = rows.Err() ;err != nil {
-		return nil,err
+	if err = rows.Err(); err != nil {
+		return nil, err
 	}
 
 	return persons, nil
-
-	
 
 }
