@@ -6,7 +6,7 @@ import (
 	"missing-persons-backend/db"
 	"missing-persons-backend/internal/handler"
 	"missing-persons-backend/internal/service"
-	"missing-persons-backend/repository"
+	"missing-persons-backend/internal/repository"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,6 +59,7 @@ func main (){
 
 
 	router.GET ("api/persons", personHandler.GetMissingPersons)
+	router.POST("api/persons",personHandler.CreateMissingPersons)
 
 	port := ":8081"
 	fmt.Printf("Server starting on port %s\n",port)
