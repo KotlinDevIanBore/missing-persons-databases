@@ -25,7 +25,7 @@ func Connect () (*sql.DB,error){
 
 	if err != nil {
 
-		return nil , err
+		return nil , fmt.Errorf("error connecting to the database: %w",err)
 	}
 
 
@@ -33,6 +33,6 @@ func Connect () (*sql.DB,error){
 	fmt.Println ("Successfully connected to the database")
 
 
-	return db, nil
+	return db,nil
 	
 }

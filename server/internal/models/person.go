@@ -8,7 +8,7 @@ type Person struct {
 	Age              int    `json:"age"`
 	Gender           string `json:"gender"`
 	LastSeenLocation string `json:"lastseen_location"`
-	LastSeenDate     string `json:"lastseen_data"`
+	LastSeenDate     string `json:"lastseen_date"`
 	ContactPerson    string `json:"contact_person"`
 	ContactPhone     string `json:"contact_phone"`
 	ContactEmail     string `json:"contact_email"`
