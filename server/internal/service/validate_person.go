@@ -12,7 +12,7 @@ import (
 
 type PersonService struct {
 
-	repo * repository.PersonRepository
+	Repo * repository.PersonRepository
 }
 
 
@@ -30,7 +30,7 @@ func (s*PersonService) CreatePerson ( person models.Person) error {
 	}
 
 
-	err = s.repo.CreatePerson(person)
+	err = s.Repo.CreatePerson(person)
 
 	if err != nil {
 

@@ -6,7 +6,7 @@ import (
 )
 
 type PersonRepository struct {
-	db *sql.DB
+	DB *sql.DB
 }
 
 func (r *PersonRepository) CreatePerson(person models.Person) error {
@@ -34,7 +34,7 @@ func (r *PersonRepository) CreatePerson(person models.Person) error {
 	
 	`
 
-	_, err := r.db.Exec(query, person.FirstName, person.MiddleName, person.Surname, person.Age, person.Gender, person.LastSeenLocation, person.LastSeenDate, person.ContactPerson, person.ContactPhone, person.ContactEmail)
+	_, err := r.DB.Exec(query, person.FirstName, person.MiddleName, person.Surname, person.Age, person.Gender, person.LastSeenLocation, person.LastSeenDate, person.ContactPerson, person.ContactPhone, person.ContactEmail)
 
 	return err
 
@@ -62,7 +62,7 @@ FROM
 	
 	`
 
-	rows, err := r.db.Query(query)
+	rows, err := r.DB.Query(query)
 	if err != nil {
 		return nil, err
 	}
