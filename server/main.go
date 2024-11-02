@@ -5,8 +5,9 @@ import (
 	"log"
 	"missing-persons-backend/db"
 	"missing-persons-backend/internal/handler"
-	"missing-persons-backend/internal/service"
 	"missing-persons-backend/internal/repository"
+	"missing-persons-backend/internal/service"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -61,12 +62,14 @@ func main (){
 	router.GET ("api/persons", personHandler.GetMissingPersons)
 	router.POST("api/persons",personHandler.CreateMissingPersons)
 
-	port := ":8081"
-	fmt.Printf("Server starting on port %s\n",port)
-
-	if err := router.Run(port);err != nil {
-		log.Fatalf( "failed to start server : %v", err)
-	}
+	port := os.Getenv("PORT")
+if port == "" {
+    port = "8081"
+}
+fmt.Printf("Server starting on port :%s\n", port)
+if err := router.Run(":" + port); err != nil {
+    log.Fatalf("failed to start server: %v", err)
+}
 
 
 }
