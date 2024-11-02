@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: missing-persons-backend
+    runtime: go
+    buildCommand: go build -o server
+    startCommand: ./server
+    envVars:
+      - key: GO_ENV
+        value: production
