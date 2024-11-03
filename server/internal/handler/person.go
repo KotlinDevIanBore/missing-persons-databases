@@ -10,6 +10,7 @@ import (
 
 type PersonHandler struct {
 	Service * service.PersonService
+	ImageService * service.ImageService
 
 }
 
@@ -41,6 +42,16 @@ c.JSON(http.StatusOK,persons)
 
 func (h*PersonHandler) CreateMissingPersons(c*gin.Context) {
 
+
+	if err := c.Request.ParseMultipartForm(10<<20); err !=nil {
+		c.JSON(http.StatusBadRequest,gin.H{
+
+			"error": "Failed to parse multipart data",
+			"details": err.Error (),
+
+		})
+	}
+
 	var newPerson models.Person
 
 	err := c.ShouldBindJSON(&newPerson)
@@ -53,6 +64,22 @@ func (h*PersonHandler) CreateMissingPersons(c*gin.Context) {
 			"details": err.Error(),
 		})
 	}
+
+
+
+	file, err := c.FormFile("image")
+    if err == nil && file != nil {
+        imageURL, err := h.ImageService.SaveImage(file)
+        if err != nil {
+            c.JSON(http.StatusInternalServerError, gin.H{
+                "error": "Failed to save image",
+                "details": err.Error(),
+            })
+            return
+        }
+        newPerson.ImageURL = imageURL
+    }
+
 
 
 	err= h.Service.CreatePerson(newPerson)
