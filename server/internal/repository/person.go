@@ -82,6 +82,7 @@ FROM
 			&person.ContactPerson,
 			&person.ContactPhone,
 			&person.ContactEmail,
+			&person.ImageURL,
 		)
 
 		if err != nil {
