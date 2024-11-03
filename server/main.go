@@ -30,7 +30,7 @@ func main() {
 	defer database.Close()
 	fmt.Println("Go server ready")
 
-	baseURL := "http://localhost:" + port
+	baseURL := "https://missing-persons-databases-1.onrender.com"
 	imageService := service.NewImageService(uploadDir,baseURL)
 
 	personRepo := &repository.PersonRepository{
