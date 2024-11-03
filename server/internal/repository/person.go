@@ -49,7 +49,7 @@ func (r *PersonRepository) GetPerson() ([]models.Person, error) {
     mst.lastseen_date AS lastseen_date,
     mst.contact_person AS contact_person,
     mst.contact_phone AS contact_phone,
-    mst.contact_email AS contact_email
+    mst.contact_email AS contact_email,
 	mst.image_url AS image_url
 FROM 
     defaultdb.missing_persons mst;
