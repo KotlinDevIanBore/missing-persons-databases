@@ -12,4 +12,12 @@ type Person struct {
 	ContactPerson    string `json:"contact_person"`
 	ContactPhone     string `json:"contact_phone"`
 	ContactEmail     string `json:"contact_email"`
+	ImageURL         string  `json:"image_url"`
+} 
+
+
+type ImageUploadResponse struct {
+    ImageURL string `json:"image_url"`
+    Success  bool   `json:"success"`
+    Error    string `json:"error,omitempty"`
 }

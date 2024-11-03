@@ -23,11 +23,12 @@ func (r *PersonRepository) CreatePerson(person models.Person) error {
 		lastseen_date,
 		contact_person,
 		contact_phone,
-		contact_email
-	) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		contact_email,
+		image_url
+	) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
 `
 
-	_, err := r.DB.Exec(query, person.ID,person.FirstName, person.MiddleName, person.Surname, person.Age, person.Gender, person.LastSeenLocation, person.LastSeenDate, person.ContactPerson, person.ContactPhone, person.ContactEmail)
+	_, err := r.DB.Exec(query, person.ID,person.FirstName, person.MiddleName, person.Surname, person.Age, person.Gender, person.LastSeenLocation, person.LastSeenDate, person.ContactPerson, person.ContactPhone, person.ContactEmail,person.ImageURL)
 
 	return err
 
@@ -49,6 +50,7 @@ func (r *PersonRepository) GetPerson() ([]models.Person, error) {
     mst.contact_person AS contact_person,
     mst.contact_phone AS contact_phone,
     mst.contact_email AS contact_email
+	mst.image_url AS image_url
 FROM 
     defaultdb.missing_persons mst;
 
