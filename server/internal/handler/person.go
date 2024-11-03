@@ -64,7 +64,13 @@ func (h*PersonHandler) CreateMissingPersons(c*gin.Context) {
 			"details":err.Error(),
 
 		})
+		return
 	}
+
+	c.JSON (http.StatusOK,gin.H{
+		"message" : "Person created successfully",
+		"data" : "newPerson",
+	})
 
 
 
