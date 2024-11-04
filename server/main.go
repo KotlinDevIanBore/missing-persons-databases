@@ -18,10 +18,7 @@ func main() {
 		port = "8081"
 	}
 
-	uploadDir := "./uploads/images"
-	if err := os.MkdirAll(uploadDir, 0755); err != nil {
-		log.Fatalf("Failed to create upload directory: %v", err)
-	}
+	
 
 	database, err := db.Connect()
 	if err != nil {
@@ -30,8 +27,17 @@ func main() {
 	defer database.Close()
 	fmt.Println("Go server ready")
 
-	baseURL := "https://missing-persons-databases-1.onrender.com"
-	imageService := service.NewImageService(uploadDir,baseURL)
+	// baseURL := "https://missing-persons-databases-1.onrender.com"
+	imageService, err := service.NewImageService(
+		os.Getenv("S3_BUCKET_NAME"),
+		fmt.Sprintf("https://%s.s3.%s.amazonaws.com", 
+			os.Getenv("S3_BUCKET_NAME"),
+			os.Getenv("AWS_REGION"),
+		),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	personRepo := &repository.PersonRepository{
 		DB: database,
@@ -63,7 +69,6 @@ func main() {
 
 	router.GET("api/persons", personHandler.GetMissingPersons)
 	router.POST("api/persons", personHandler.CreateMissingPersons)
-	router.Static("/images", uploadDir)
 
 	fmt.Printf("Server starting on port :%s\n", port)
 	if err := router.Run(":" + port); err != nil {
